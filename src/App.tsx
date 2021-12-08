@@ -1,26 +1,145 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import { useState } from 'react'
 
-function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+const questionList = [
+  {
+    question: 'Question 1',
+    choices: {
+      a: 'a',
+      b: 'b',
+      c: 'c',
+      d: 'd'
+    },
+    correctAnswer: 'a',
+    userGuess: ''
+  },
+  {
+    question: 'Question 2',
+    choices: {
+      a: 'a',
+      b: 'b',
+      c: 'c',
+      d: 'd'
+    },
+    correctAnswer: 'b',
+    userGuess: ''
+  },
+  {
+    question: 'Question 3',
+    choices: {
+      a: 'a',
+      b: 'b',
+      c: 'c',
+      d: 'd'
+    },
+    correctAnswer: 'c',
+    userGuess: ''
+  },
+  {
+    question: 'Question 4',
+    choices: {
+      a: 'a',
+      b: 'b',
+      c: 'c',
+      d: 'd'
+    },
+    correctAnswer: 'd',
+    userGuess: ''
+  },
+  {
+    question: 'Question 5',
+    choices: {
+      a: 'a',
+      b: 'b',
+      c: 'c',
+      d: 'd'
+    },
+    correctAnswer: 'a',
+    userGuess: ''
+  },
+  {
+    question: 'Question 6',
+    choices: {
+      a: 'a',
+      b: 'b',
+      c: 'c',
+      d: 'd'
+    },
+    correctAnswer: 'b',
+    userGuess: ''
+  },
+  {
+    question: 'Question 7',
+    choices: {
+      a: 'a',
+      b: 'b',
+      c: 'c',
+      d: 'd'
+    },
+    correctAnswer: 'c',
+    userGuess: ''
+  },
+  {
+    question: 'Question 8',
+    choices: {
+      a: 'a',
+      b: 'b',
+      c: 'c',
+      d: 'd'
+    },
+    correctAnswer: 'd',
+    userGuess: ''
+  },
+  {
+    question: 'Question 9',
+    choices: {
+      a: 'a',
+      b: 'b',
+      c: 'c',
+      d: 'd'
+    },
+    correctAnswer: 'a',
+    userGuess: ''
+  },
+  {
+    question: 'Question 10',
+    choices: {
+      a: 'a',
+      b: 'b',
+      c: 'c',
+      d: 'd'
+    },
+    correctAnswer: 'b',
+    userGuess: ''
+  }
+]
+
+// Randomly pick 5 questions to be in the game.
+const pickQuestions = () => {
+  let questions = questionList
+  let pickedQuestions = []
+  for (let i = 0; i < 5; i++) {
+    let choice = Math.floor(Math.random() * (questionList.length))
+    pickedQuestions.push(questions[choice])
+    questions.splice(choice, 1)
+  }
+  return pickedQuestions
 }
 
-export default App;
+let initialState = pickQuestions()
+
+const App = () => {
+  
+  const [questions, setQuestions] = useState(initialState)
+
+  return (
+    <div>
+
+    {questions.map((question) => {
+      return question.question
+    })}
+
+    </div>
+  )
+}
+
+export default App
