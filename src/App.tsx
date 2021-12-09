@@ -1,4 +1,6 @@
 import { useState } from 'react'
+import AnswerChoice from './components/AnswerChoice'
+import Card from './components/Card'
 
 const questionList = [
   {
@@ -135,7 +137,9 @@ const App = () => {
     <div>
 
     {questions.map((question) => {
-      return question.question
+      return <Card question={question.question}>
+        <AnswerChoice choices={question.choices} />
+      </Card>
     })}
 
     </div>

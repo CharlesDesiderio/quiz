@@ -1,6 +1,14 @@
-const Card = () => {
+interface cardProps {
+  question: string
+  children: React.ReactChild
+}
+
+const Card = ({ question, children }: cardProps) => {
   return (
-    <div>yo</div>
+    <div>
+      {question}
+      {children}
+    </div>
   )
 }
 
