@@ -1,6 +1,10 @@
-import { useState } from 'react'
+import { useRef, useState } from 'react'
 import AnswerChoice from './components/AnswerChoice'
 import Card from './components/Card'
+import ResultAnswer from './components/ResultAnswer'
+import Results from './components/Results'
+
+const App = () => {
 
 const questionList = [
   {
@@ -117,31 +121,48 @@ const questionList = [
 
 // Randomly pick 5 questions to be in the game.
 const pickQuestions = () => {
-  let questions = questionList
+  let allQuestions = questionList
   let pickedQuestions = []
   for (let i = 0; i < 5; i++) {
     let choice = Math.floor(Math.random() * (questionList.length))
-    pickedQuestions.push(questions[choice])
-    questions.splice(choice, 1)
+    pickedQuestions.push(allQuestions[choice])
+    allQuestions.splice(choice, 1)
   }
   return pickedQuestions
 }
 
 let initialState = pickQuestions()
 
-const App = () => {
-  
-  const [questions, setQuestions] = useState(initialState)
+const [questions, setQuestions] = useState(initialState)
+const [currentQuestion, setCurrentQuestion] = useState(0)
+
+const pickAnswer = (answer: string) => {
+  let newQuestions = questions
+  newQuestions[currentQuestion].userGuess = answer
+  setQuestions(newQuestions)
+  if (currentQuestion < questions.length - 1) {
+    setCurrentQuestion(currentQuestion + 1)
+  }
+}
 
   return (
     <div>
+      {
+        currentQuestion < questions.length - 1 ? 
 
-    {questions.map((question) => {
-      return <Card question={question.question}>
-        <AnswerChoice choices={question.choices} />
+      <div>
+      <Card question={questions[currentQuestion].question}>
+        <AnswerChoice pickAnswer={pickAnswer} choices={questions[currentQuestion].choices} />
       </Card>
-    })}
-
+      </div> :
+      <div>
+        <Results data={questions} />
+        {
+          questions.map((question, i) => {
+            return <ResultAnswer question={question} i={i} />
+          })
+        }
+      </div> }
     </div>
   )
 }
